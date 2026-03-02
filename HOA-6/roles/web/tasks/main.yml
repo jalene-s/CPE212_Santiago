@@ -1,0 +1,27 @@
+---
+- name: Install Apache and PHP for Ubuntu
+  tags: web
+  apt:
+    name:
+      - apache2
+      - libapache2-mod-php
+    state: latest
+    update_cache: yes
+  when: ansible_distribution == "Ubuntu"
+
+- name: Install Apache and PHP for CentOS
+  tags: web
+  dnf:
+    name:
+      - httpd
+      - php
+    state: latest
+  when: ansible_distribution == "CentOS"
+
+- name: Start httpd (CentOS)
+  tags: web
+  service:
+    name: httpd
+    state: started
+    enabled: true
+  when: ansible_distribution == "CentOS"
