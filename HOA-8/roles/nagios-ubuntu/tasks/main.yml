@@ -8,6 +8,6 @@
 
 - name: Start Nagios Service
   service:
-    name: nagios
+    name: nagios4
     state: started
     enabled: yes

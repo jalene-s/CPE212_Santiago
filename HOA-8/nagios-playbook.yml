@@ -4,7 +4,5 @@
   become: yes
 
   roles:
-    - pre-requisite_ubuntu
-    - pre-requisite_centos
     - nagios-ubuntu
     - nagios-centos
