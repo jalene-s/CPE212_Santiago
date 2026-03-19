@@ -1,0 +1,29 @@
+---
+- name: Build and Run Docker Container
+  hosts: localhost
+  become: yes
+  tasks:
+
+    - name: Ensure docker Python module is installed
+      pip:
+        name: docker
+        state: present
+
+    - name: Build Docker image from Dockerfile
+      community.docker.docker_image:
+        name: web-db-server
+        source: build      # tells Ansible to build from local Dockerfile
+        build:
+          path: .          # path to folder with Dockerfile
+        tag: latest
+        state: present
+
+    - name: Ensure the container is running
+      community.docker.docker_container:
+        name: mycontainer
+        image: web-db-server:latest
+        state: started
+        recreate: yes
+        ports:
+          - "8080:80"
+          - "3306:3306"
